@@ -1,1 +1,187 @@
 
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>سورپرایز برای مائده 💚</title>
+<style>
+body {
+  font-family: "Tahoma", sans-serif;
+  text-align: center;
+  background: radial-gradient(circle, #002b36, #001c1f);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e0f7fa;
+}
+
+.card {
+  background: rgba(0, 40, 40, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid #26a69a;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.4);
+  max-width: 380px;
+  width: 90%;
+  position: relative;
+}
+
+input {
+  padding: 12px;
+  border: 2px solid #26a69a;
+  border-radius: 12px;
+  width: 90%;
+  background: #00332d;
+  color: #e0f7fa;
+  outline: none;
+  font-size: 15px;
+}
+
+button {
+  margin-top: 18px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #00e676, #00bfa5);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,255,200,0.6);
+}
+
+.hidden { display: none; }
+
+/* خط ضربان قلب /\ واقعی */
+.ekg {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background: #001c1f;
+  border-radius: 8px;
+  border: 1px solid #00ff99;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.line {
+  position: absolute;
+  bottom: 50%;
+  width: 2px;
+  background: #00ff99;
+}
+
+.celebration {
+  font-size: 22px;
+  font-weight: bold;
+  color: #00ff99;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #00ff99; }
+  to { text-shadow: 0 0 25px #00ffcc, 0 0 40px #00ffaa; }
+}
+
+.petal {
+  position: absolute;
+  top: -50px;
+  font-size: 26px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div id="question" class="card">
+  <p>اسمتو بنویس، فرشته‌ی سبزپوش 💚</p>
+  <input type="text" id="nameInput">
+  <button onclick="askReady()">بعدی</button>
+</div>
+
+<div id="ready" class="card hidden">
+  <p>آماده‌ای برای سورپرایز اتاق عمل؟ 🩺</p>
+  <button onclick="showResult()">بزن بریم! 🚑</button>
+</div>
+
+<div id="result" class="card hidden">
+  <div class="ekg" id="ekgContainer"></div>
+  <p id="greeting"></p>
+  <p class="celebration">🌹 مائده جان، دختر عموی مهربونم، روزت مبارک 🌹</p>
+</div>
+
+<audio id="heartbeatSound" src="heartbeat-beep.mp3"></audio>
+
+<script>
+let userName = "";
+
+function askReady() {
+  userName = document.getElementById('nameInput').value;
+  if(userName.trim() === "") {
+    alert("لطفا اسمتو بنویس 🙂");
+    return;
+  }
+  document.getElementById('question').classList.add('hidden');
+  document.getElementById('ready').classList.remove('hidden');
+}
+
+function showResult() {
+  document.getElementById('ready').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('greeting').innerText = userName + " جان، سورپرایز اتاق عمل آماده شد 😍";
+  startPetals();
+  startEKG();
+  startHeartbeat();
+}
+
+// گلبرگ‌ها
+function startPetals() {
+  setInterval(createPetal, 500);
+}
+function createPetal() {
+  const petal = document.createElement('div');
+  petal.classList.add('petal');
+  const symbols = ["🌸","🌹","❤️","💉","🩺","💊"];
+  petal.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (4 + Math.random() * 3) + "s"; 
+  document.body.appendChild(petal);
+  setTimeout(() => { petal.remove(); }, 7000);
+}
+
+// ضربان قلب /\ واقعی
+function startEKG() {
+  const container = document.getElementById('ekgContainer');
+  container.innerHTML = "";
+  let positions = [0, -20, 40, -10, 0]; // شکل موج /\ ساده
+  for(let i=0;i<50;i++){
+    const line = document.createElement("div");
+    line.classList.add("line");
+    line.style.left = (i*4) + "%";
+    line.style.height = (10 + Math.abs(positions[i%positions.length])) + "px";
+    container.appendChild(line);
+  }
+}
+
+// صدای کوتاه ضربان
+function startHeartbeat() {
+  const audio = document.getElementById('heartbeatSound');
+  setInterval(() => {
+    audio.currentTime = 0;
+    audio.play();
+  }, 600);
+}
+</script>
+</body>
+  </html>
+

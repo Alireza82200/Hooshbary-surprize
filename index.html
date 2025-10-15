@@ -3,7 +3,7 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>روز هوشبری</title>
+<title>سورپرایز برای فرشته سبزپوش 💚</title>
 <style>
 body {
   font-family: "Tahoma", sans-serif;
@@ -58,7 +58,7 @@ button:hover {
 
 .hidden { display: none; }
 
-/* خط ضربان قلب /\ واقعی */
+/* مانیتور ضربان قلب */
 .ekg {
   position: relative;
   width: 100%;
@@ -117,7 +117,6 @@ button:hover {
 <div id="result" class="card hidden">
   <div class="ekg" id="ekgContainer"></div>
   <p id="greeting"></p>
-  <p class="celebration">🌹 مائده جان، دختر عموی مهربونم، روزت مبارک 🌹</p>
 </div>
 
 <audio id="heartbeatSound" src="heartbeat-beep.mp3"></audio>
@@ -126,8 +125,8 @@ button:hover {
 let userName = "";
 
 function askReady() {
-  userName = document.getElementById('nameInput').value;
-  if(userName.trim() === "") {
+  userName = document.getElementById('nameInput').value.trim();
+  if(userName === "") {
     alert("لطفا اسمتو بنویس 🙂");
     return;
   }
@@ -138,10 +137,16 @@ function askReady() {
 function showResult() {
   document.getElementById('ready').classList.add('hidden');
   document.getElementById('result').classList.remove('hidden');
-  document.getElementById('greeting').innerText = userName + " جان، سورپرایز اتاق عمل آماده شد 😍";
   startPetals();
   startEKG();
   startHeartbeat();
+
+  const greetingEl = document.getElementById('greeting');
+  if(userName === "مائده" || userName === "maede" || userName === "Maede") {
+    greetingEl.innerHTML = "🌹 مائده جان، دختر عموی مهربونم، روزت مبارک 🌹";
+  } else {
+    greetingEl.innerHTML = "💚 فرشته‌ی سبزپوش، روزت مبارک 💉🌸";
+  }
 }
 
 // گلبرگ‌ها
@@ -159,11 +164,11 @@ function createPetal() {
   setTimeout(() => { petal.remove(); }, 7000);
 }
 
-// ضربان قلب /\ واقعی
+// ضربان قلب
 function startEKG() {
   const container = document.getElementById('ekgContainer');
   container.innerHTML = "";
-  let positions = [0, -20, 40, -10, 0]; // شکل موج /\ ساده
+  let positions = [0, -20, 40, -10, 0];
   for(let i=0;i<50;i++){
     const line = document.createElement("div");
     line.classList.add("line");
@@ -173,7 +178,7 @@ function startEKG() {
   }
 }
 
-// صدای کوتاه ضربان
+// صدا
 function startHeartbeat() {
   const audio = document.getElementById('heartbeatSound');
   setInterval(() => {
@@ -183,5 +188,4 @@ function startHeartbeat() {
 }
 </script>
 </body>
-  </html>
-
+</html
